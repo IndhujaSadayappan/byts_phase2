@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import MainLayout from '../components/MainLayout'
-import { TrendingUp, BookOpen, Users, Briefcase, ArrowRight, Star } from 'lucide-react'
+import { TrendingUp, BookOpen, Users, Briefcase, ArrowRight, Star, FileText } from 'lucide-react'
 import ChatWidgetButton from '../components/chat/ChatWidgetButton.jsx'
 import ChatContainer from '../components/chat/ChatContainer.jsx'
+
 function DashboardPage() {
   const [experiences, setExperiences] = useState([])
   const [loading, setLoading] = useState(true)
@@ -86,38 +87,13 @@ function DashboardPage() {
   ]
 
   const opportunities = [
-    {
-      id: 1,
-      company: 'Goldman Sachs',
-      role: 'Analyst',
-      location: 'Mumbai',
-      deadline: 'Feb 15, 2024'
-    },
-    {
-      id: 2,
-      company: 'Morgan Stanley',
-      role: 'Software Engineer',
-      location: 'Bangalore',
-      deadline: 'Feb 20, 2024'
-    },
-    {
-      id: 3,
-      company: 'JP Morgan',
-      role: 'Quant Developer',
-      location: 'Mumbai',
-      deadline: 'Feb 25, 2024'
-    },
+    { id: 1, company: 'Goldman Sachs', role: 'Analyst', location: 'Mumbai', deadline: 'Feb 15, 2024' },
+    { id: 2, company: 'Morgan Stanley', role: 'Software Engineer', location: 'Bangalore', deadline: 'Feb 20, 2024' },
+    { id: 3, company: 'JP Morgan', role: 'Quant Developer', location: 'Mumbai', deadline: 'Feb 25, 2024' },
   ]
 
   const trendingTopics = [
-    'System Design',
-    'DSA',
-    'Behavioral',
-    'DBMS',
-    'Networking',
-    'ML/AI',
-    'Cloud',
-    'API Design'
+    'System Design', 'DSA', 'Behavioral', 'DBMS', 'Networking', 'ML/AI', 'Cloud', 'API Design'
   ]
 
   const quickStats = [
@@ -129,37 +105,55 @@ function DashboardPage() {
 
   return (
     <MainLayout>
-      <div className="max-w-7xl mx-auto px-4 py-12 bg-background">
-        {/* Hero Banner */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-16 text-white shadow-xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Complete Placement Preparation Hub</h1>
-            <p className="text-lg md:text-xl mb-8 opacity-95">
-              Learn from real placement experiences, access curated materials, and connect with mentors to ace your interviews.
-            </p>
-            <div className="flex gap-4 flex-wrap">
-              <Link
-                to="/share-experience"
-                className="px-8 py-3.5 rounded-lg bg-white text-primary font-bold hover:bg-background hover:shadow-lg transition inline-flex items-center gap-2"
-              >
-                Share Your Experience <ArrowRight size={20} />
-              </Link>
-              <Link
-                to="/materials"
-                className="px-8 py-3.5 rounded-lg bg-accent text-white font-bold hover:bg-opacity-90 hover:shadow-lg transition inline-flex items-center gap-2"
-              >
-                Explore Materials <ArrowRight size={20} />
-              </Link>
-              <Link
-                to="/analytics"
-                className="px-8 py-3.5 rounded-lg border-2 border-white text-white font-bold hover:bg-white hover:text-primary transition inline-flex items-center gap-2"
-              >
-                View Analytics <ArrowRight size={20} />
-              </Link>
-            </div>
-          </div>
-        </section>
+      
+  <section className="w-full bg-[#deeaed] border-b border-[#071952]/10 pt-24 pb-12 md:pt-28 md:pb-20 transition-all">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="flex flex-col items-start lg:w-3/4">
+      
+      {/* Reduced mb-4 for tighter grouping */}
+      <span className="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-widest uppercase bg-[#071952] text-white rounded-full shadow-sm">
+        Empowering Careers
+      </span>
 
+      {/* Heading - Reduced mb-4 */}
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 text-[#071952] tracking-tight">
+        Your Complete <span className="text-[#088395]">Placement Preparation</span> Hub
+      </h1>
+      
+      {/* Subtext - Reduced mb-8 */}
+      <p className="text-base md:text-lg lg:text-xl text-[#071952]/80 leading-relaxed mb-8 max-w-2xl font-medium">
+        Learn from real placement experiences, access curated materials, and connect with mentors to ace your interviews.
+      </p>
+
+      {/* CTA Buttons */}
+      <div className="flex flex-wrap gap-4 w-full sm:w-auto">
+        <Link
+          to="/share-experience"
+          className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#071952] text-white font-bold hover:brightness-110 transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          Share Your Experience <ArrowRight size={18} />
+        </Link>
+        
+        <Link
+          to="/materials"
+          className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#088395] text-white font-bold hover:brightness-110 transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          Explore Materials <ArrowRight size={18} />
+        </Link>
+        
+        <Link
+          to="/analytics"
+          className="w-full sm:w-auto px-6 py-3 rounded-xl border-2 border-[#071952] text-[#071952] font-bold hover:bg-white transition-all flex items-center justify-center gap-2"
+        >
+          View Analytics <ArrowRight size={18} />
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
+      {/* --- PAGE CONTENT (RESTRICTED WIDTH) --- */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        
         {/* Quick Stats */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-primary mb-8">Platform Overview</h2>
@@ -167,15 +161,15 @@ function DashboardPage() {
             {quickStats.map((stat) => (
               <div
                 key={stat.label}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-gray-100 hover:border-accent"
+                className="bg-card rounded-xl shadow-md p-6 hover:shadow-lg transition-all border border-border hover:border-accent"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <p className="text-gray-600 text-sm font-semibold mb-2">{stat.label}</p>
+                    <p className="text-muted-foreground text-sm font-semibold mb-2">{stat.label}</p>
                     <p className="text-4xl font-bold text-primary">{stat.value.toLocaleString()}</p>
                   </div>
-                  <div className="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center text-secondary">
-                    {<stat.icon size={24} />}
+                  <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-secondary">
+                    <stat.icon size={24} />
                   </div>
                 </div>
               </div>
@@ -198,21 +192,16 @@ function DashboardPage() {
               {experiences.map((exp) => (
                 <div
                   key={exp.id}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 hover:border-accent relative overflow-hidden group"
+                  className="bg-card rounded-xl shadow-md hover:shadow-xl transition-all border border-border hover:border-accent relative overflow-hidden group"
                 >
-                  {/* Decorative Circular Bubbles */}
-                  <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-accent opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                  <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-secondary opacity-15 group-hover:opacity-25 transition-opacity"></div>
-                  <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-primary opacity-10 group-hover:opacity-20 transition-opacity"></div>
-
                   <div className="p-6 relative z-10">
                     <div className="mb-4">
                       <h3 className="text-2xl font-bold text-primary mb-2">{exp.company}</h3>
-                      <p className="text-gray-600 text-lg font-medium">{exp.role}</p>
+                      <p className="text-muted-foreground text-lg font-medium">{exp.role}</p>
                     </div>
 
-                    <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-100">
-                      <span className="text-sm text-gray-500 font-medium bg-background px-3 py-1 rounded-full">
+                    <div className="flex justify-between items-center mb-4 pb-4 border-b border-border">
+                      <span className="text-sm text-muted-foreground font-medium bg-background px-3 py-1 rounded-full">
                         Batch {exp.batch}
                       </span>
                       <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full">
@@ -222,15 +211,16 @@ function DashboardPage() {
                     </div>
 
                     <div className="mb-4">
-                      <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${exp.difficulty === 'Hard' ? 'bg-red-50 text-red-700 border border-red-200' :
-                        exp.difficulty === 'Medium' ? 'bg-yellow-50 text-yellow-700 border border-yellow-200' :
-                          'bg-green-50 text-green-700 border border-green-200'
-                        }`}>
+                      <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold ${
+                        exp.difficulty === 'Hard' ? 'bg-error/10 text-error border border-error/20' :
+                        exp.difficulty === 'Medium' ? 'bg-warning/10 text-warning border border-warning/20' :
+                        'bg-success/10 text-success border border-success/20'
+                      }`}>
                         {exp.difficulty} Difficulty
                       </span>
                     </div>
 
-                    <button className="w-full px-4 py-2.5 rounded-lg bg-secondary text-white font-semibold hover:bg-accent transition shadow-md hover:shadow-lg">
+                    <button className="w-full px-4 py-2.5 rounded-lg bg-secondary text-secondary-foreground font-semibold hover:brightness-110 transition shadow-md">
                       Read Experience
                     </button>
                   </div>
@@ -250,13 +240,13 @@ function DashboardPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {materials.map((material) => (
-              <div key={material.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-gray-100 hover:border-accent">
-                <div className="mb-4 p-4 bg-accent bg-opacity-10 rounded-lg flex items-center justify-center h-20">
+              <div key={material.id} className="bg-card rounded-xl shadow-md p-6 hover:shadow-lg transition-all border border-border hover:border-accent">
+                <div className="mb-4 p-4 bg-accent/10 rounded-lg flex items-center justify-center h-20">
                   <BookOpen className="text-secondary" size={32} />
                 </div>
-                <h3 className="font-bold text-gray-800 mb-2 line-clamp-2 text-primary">{material.title}</h3>
+                <h3 className="font-bold text-primary mb-2 line-clamp-2">{material.title}</h3>
                 <p className="text-sm text-secondary font-medium mb-4">{material.category}</p>
-                <p className="text-xs text-gray-500">{material.downloads.toLocaleString()} downloads</p>
+                <p className="text-xs text-muted-foreground">{material.downloads.toLocaleString()} downloads</p>
               </div>
             ))}
           </div>
@@ -269,7 +259,7 @@ function DashboardPage() {
             {trendingTopics.map((topic) => (
               <button
                 key={topic}
-                className="px-6 py-3 rounded-full bg-white border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition shadow-md hover:shadow-lg"
+                className="px-6 py-3 rounded-full bg-card border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-primary-foreground transition shadow-md"
               >
                 {topic}
               </button>
@@ -287,14 +277,14 @@ function DashboardPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {opportunities.map((opp) => (
-              <div key={opp.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all border border-gray-100 hover:border-accent">
+              <div key={opp.id} className="bg-card rounded-xl shadow-md p-6 hover:shadow-lg transition-all border border-border hover:border-accent">
                 <h3 className="text-xl font-bold text-primary mb-2">{opp.company}</h3>
-                <p className="text-gray-700 mb-4 font-semibold">{opp.role}</p>
-                <div className="space-y-2 mb-6 text-sm text-gray-600">
-                  <p className="font-medium">Location: <span className="text-gray-700">{opp.location}</span></p>
-                  <p className="font-medium">Deadline: <span className="text-gray-700">{opp.deadline}</span></p>
+                <p className="text-primary font-semibold mb-4">{opp.role}</p>
+                <div className="space-y-2 mb-6 text-sm text-muted-foreground">
+                  <p className="font-medium">Location: <span className="text-primary">{opp.location}</span></p>
+                  <p className="font-medium">Deadline: <span className="text-primary">{opp.deadline}</span></p>
                 </div>
-                <button className="w-full px-4 py-2.5 rounded-lg bg-secondary text-white font-semibold hover:bg-accent transition shadow-md hover:shadow-lg">
+                <button className="w-full px-4 py-2.5 rounded-lg bg-secondary text-secondary-foreground font-semibold hover:brightness-110 transition shadow-md">
                   Apply Now
                 </button>
               </div>
@@ -302,6 +292,8 @@ function DashboardPage() {
           </div>
         </section>
       </div>
+
+      {/* Floating Chat Components */}
       <ChatWidgetButton isOpen={isChatOpen} onToggle={() => setIsChatOpen(!isChatOpen)} />
 
       {isChatOpen && (
@@ -309,18 +301,8 @@ function DashboardPage() {
           <ChatContainer />
         </div>
       )}
-
     </MainLayout>
   )
 }
 
-// Placeholder icon since we're using lucide-react icons
-function FileText(props) {
-  return (
-    <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg>
-  )
-}
-
-export default DashboardPage
+export default DashboardPage;
