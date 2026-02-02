@@ -19,8 +19,9 @@ function ProfileSetupPage() {
       const response = await profileAPI.create(formData)
       if (response.data.success) {
         setSuccess(true)
+        localStorage.clear()
         setTimeout(() => {
-          navigate('/home')
+          navigate('/login')
         }, 2000)
       }
     } catch (err) {

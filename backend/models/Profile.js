@@ -13,21 +13,18 @@ const profileSchema = new mongoose.Schema({
   whatsappNumber: String,
   year: String,
   branch: String,
-  batch: Number,
+  batch: String,
   skills: [String],
   linkedinUrl: String,
   githubUrl: String,
   profilePicture: String,
   placementStatus: {
     type: String,
-    enum: ['placed', 'not-placed'],
+    default: 'not-placed'
   },
   company: String,
   role: String,
-  internshipType: {
-    type: String,
-    enum: ['internship', 'full-time'],
-  },
+  internshipType: String,
   willingToMentor: Boolean,
   createdAt: {
     type: Date,

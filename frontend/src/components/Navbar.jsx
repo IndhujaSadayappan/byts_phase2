@@ -10,20 +10,67 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
   const [userInitial, setUserInitial] = useState('')
+  const [userPicture, setUserPicture] = useState('')
   const [workStatus, setWorkStatus] = useState(null)
   const dropdownRef = useRef(null)
 
   useEffect(() => {
-    // Get user data from localStorage
-    const userEmail = localStorage.getItem('userEmail')
-    const rememberMe = localStorage.getItem('rememberedEmail')
-    
-    if (userEmail) {
-      // Extract first letter from email for initial
-      const initial = userEmail.charAt(0).toUpperCase()
-      setUserInitial(initial)
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('authToken')
+      const userEmail = localStorage.getItem('userEmail')
+      const userDataStr = localStorage.getItem('user')
+
+      // Set initial from email as placeholder
+      if (userEmail) {
+        setUserInitial(userEmail.charAt(0).toUpperCase())
+      }
+
+      // Try to get from localStorage first
+      if (userDataStr) {
+        try {
+          const userData = JSON.parse(userDataStr)
+          if (userData.profilePicture) setUserPicture(userData.profilePicture)
+          if (userData.fullName) setUserInitial(userData.fullName.charAt(0).toUpperCase())
+          if (userData.role && userData.company) {
+            setWorkStatus({ role: userData.role, company: userData.company })
+          }
+        } catch (err) {
+          console.error('Error parsing user data:', err)
+        }
+      }
+
+      // If we have a token but no image/name, fetch from API
+      if (token && (!userPicture || !userInitial || userInitial === userEmail?.charAt(0).toUpperCase())) {
+        try {
+          const response = await fetch('http://localhost:5000/api/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+          if (response.ok) {
+            const data = await response.json()
+            const profile = data.profile || data
+            
+            if (profile.profilePicture) setUserPicture(profile.profilePicture)
+            if (profile.fullName) setUserInitial(profile.fullName.charAt(0).toUpperCase())
+            if (profile.role && profile.company) {
+              setWorkStatus({ role: profile.role, company: profile.company })
+            }
+
+            // Update localStorage for next time
+            localStorage.setItem('user', JSON.stringify({
+              fullName: profile.fullName,
+              profilePicture: profile.profilePicture,
+              role: profile.role,
+              company: profile.company
+            }))
+          }
+        } catch (err) {
+          console.log('Navbar profile fetch error:', err)
+        }
+      }
     }
-  }, [])
+
+    fetchUserData()
+  }, [location.pathname]) // Re-fetch on navigation to catch updates
 
   const navLinks = [
     { label: 'Home', path: '/home' },
@@ -117,10 +164,14 @@ function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-center font-bold hover:shadow-xl transition-all hover:scale-105"
+                className="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-center font-bold hover:shadow-xl transition-all hover:scale-105 overflow-hidden border-2 border-white shadow-sm"
                 title="Profile Menu"
               >
-                {userInitial}
+                {userPicture ? (
+                  <img src={userPicture} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  userInitial
+                )}
               </button>
 
               {profileDropdownOpen && (

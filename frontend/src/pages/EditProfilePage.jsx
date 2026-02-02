@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Save, Loader, X } from "lucide-react";
 import MainLayout from "../components/MainLayout";
 import '../index.css';
@@ -12,6 +12,8 @@ const Card = ({ children, className = "" }) => (
 
 function EditProfile() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const workStatusRef = useRef(null);
   const [formData, setFormData] = useState({
     fullName: "",
     rollNumber: "",
@@ -43,6 +45,14 @@ function EditProfile() {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  useEffect(() => {
+    if (!loading && location.state?.scrollTo === 'work-status' && workStatusRef.current) {
+      workStatusRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Clear state so it doesn't scroll again on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [loading, location.state]);
 
   const fetchProfile = async () => {
     try {
@@ -163,7 +173,8 @@ function EditProfile() {
         ...JSON.parse(localStorage.getItem('user') || '{}'),
         fullName: formData.fullName,
         role: formData.role,
-        company: formData.company
+        company: formData.company,
+        profilePicture: formData.profilePicture
       }));
 
       setSuccess(true);
@@ -255,7 +266,8 @@ function EditProfile() {
                     name="collegeEmail"
                     value={formData.collegeEmail}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
+                    readOnly
                   />
                 </div>
 
@@ -331,7 +343,7 @@ function EditProfile() {
             </section>
 
             {/* Current Status */}
-            <section>
+            <section ref={workStatusRef}>
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Current Status</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

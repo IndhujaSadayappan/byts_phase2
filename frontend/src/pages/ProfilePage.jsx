@@ -240,7 +240,10 @@ function ProfilePage() {
             
             {/* Show "Add Work Status" only when both role and company are missing */}
             {!profile.role && !profile.company && (
-              <button className="w-full mt-4 px-4 py-2.5 rounded-lg bg-accent text-white font-semibold hover:bg-primary transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+              <button 
+                onClick={() => navigate('/edit-profile', { state: { scrollTo: 'work-status' } })}
+                className="w-full mt-4 px-4 py-2.5 rounded-lg bg-accent text-white font-semibold hover:bg-primary transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+              >
                 <Briefcase size={18} />
                 Add Work Status
               </button>

@@ -87,12 +87,10 @@ const validators = {
     return trimmed.length >= 2 && trimmed.length <= 100
   },
   rollNumber: (rollNum) => {
-    return rollNum.length >= 3
+    return rollNum && rollNum.length >= 3
   },
   batch: (batch) => {
-    const year = parseInt(batch)
-    const currentYear = new Date().getFullYear()
-    return year >= 2000 && year <= currentYear + 10
+    return batch && batch.length >= 4
   },
   skills: (skills) => {
     return Array.isArray(skills) && skills.length >= 1 && skills.length <= 20
@@ -164,11 +162,10 @@ export const updateProfile = async (req, res) => {
       })
     }
 
-    // Allowed fields to update
+    // Allowed fields to update (removed collegeEmail)
     const allowedFields = [
       'fullName',
       'rollNumber',
-      'collegeEmail',
       'whatsappNumber',
       'year',
       'branch',
