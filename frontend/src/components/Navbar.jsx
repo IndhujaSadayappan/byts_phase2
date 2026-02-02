@@ -19,7 +19,7 @@ function Navbar() {
       const token = localStorage.getItem('authToken')
       const userEmail = localStorage.getItem('userEmail')
       const userDataStr = localStorage.getItem('user')
-
+      // console.log(token)
       // Set initial from email as placeholder
       if (userEmail) {
         setUserInitial(userEmail.charAt(0).toUpperCase())
