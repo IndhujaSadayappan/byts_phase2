@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Menu, X, LogOut, User, Settings, FileText, Briefcase } from 'lucide-react'
+import { profileAPI } from '../services/api'
 
 function Navbar() {
   const navigate = useNavigate()
@@ -10,6 +11,7 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
   const [userInitial, setUserInitial] = useState('')
+  const [userName, setUserName] = useState('')
   const [userPicture, setUserPicture] = useState('')
   const [workStatus, setWorkStatus] = useState(null)
   const dropdownRef = useRef(null)
@@ -18,44 +20,37 @@ function Navbar() {
     const fetchUserData = async () => {
       const token = localStorage.getItem('authToken')
       const userEmail = localStorage.getItem('userEmail')
-      const userDataStr = localStorage.getItem('user')
 
       // Set initial from email as placeholder
       if (userEmail) {
         setUserInitial(userEmail.charAt(0).toUpperCase())
       }
 
-      // Try to get from localStorage first
-      if (userDataStr) {
+      // If we have a token, fetch from API
+      if (token) {
         try {
-          const userData = JSON.parse(userDataStr)
-          if (userData.profilePicture) setUserPicture(userData.profilePicture)
-          if (userData.fullName) setUserInitial(userData.fullName.charAt(0).toUpperCase())
-          if (userData.role && userData.company) {
-            setWorkStatus({ role: userData.role, company: userData.company })
-          }
-        } catch (err) {
-          console.error('Error parsing user data:', err)
-        }
-      }
+          const response = await profileAPI.get()
 
-      // If we have a token but no image/name, fetch from API
-      if (token && (!userPicture || !userInitial || userInitial === userEmail?.charAt(0).toUpperCase())) {
-        try {
-          const response = await fetch('http://localhost:5000/api/profile', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          })
-          if (response.ok) {
-            const data = await response.json()
-            const profile = data.profile || data
-            
-            if (profile.profilePicture) setUserPicture(profile.profilePicture)
-            if (profile.fullName) setUserInitial(profile.fullName.charAt(0).toUpperCase())
+          if (response.data.success) {
+            const profile = response.data.profile
+
+            // Update profile picture
+            if (profile.profilePicture) {
+              setUserPicture(profile.profilePicture)
+            }
+
+            // Update user name and initial
+            if (profile.fullName) {
+              setUserName(profile.fullName)
+              setUserInitial(profile.fullName.charAt(0).toUpperCase())
+            }
+
+            // Update work status
             if (profile.role && profile.company) {
               setWorkStatus({ role: profile.role, company: profile.company })
             }
 
-            // Update localStorage for next time
+            // Update localStorage for caching
             localStorage.setItem('user', JSON.stringify({
               fullName: profile.fullName,
               profilePicture: profile.profilePicture,
@@ -65,6 +60,24 @@ function Navbar() {
           }
         } catch (err) {
           console.log('Navbar profile fetch error:', err)
+
+          // Fallback to localStorage if API fails
+          const userDataStr = localStorage.getItem('user')
+          if (userDataStr) {
+            try {
+              const userData = JSON.parse(userDataStr)
+              if (userData.profilePicture) setUserPicture(userData.profilePicture)
+              if (userData.fullName) {
+                setUserName(userData.fullName)
+                setUserInitial(userData.fullName.charAt(0).toUpperCase())
+              }
+              if (userData.role && userData.company) {
+                setWorkStatus({ role: userData.role, company: userData.company })
+              }
+            } catch (parseErr) {
+              console.error('Error parsing cached user data:', parseErr)
+            }
+          }
         }
       }
     }
@@ -129,8 +142,8 @@ function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`px-4 py-2 rounded-lg font-semibold transition-all ${isActive(link.path)
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-gray-700 hover:bg-background hover:text-secondary'
+                  ? 'bg-primary text-white shadow-md'
+                  : 'text-gray-700 hover:bg-background hover:text-secondary'
                   }`}
               >
                 {link.label}
@@ -175,7 +188,16 @@ function Navbar() {
               </button>
 
               {profileDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border-2 border-accent py-2 animate-in fade-in-50">
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border-2 border-accent py-2 animate-in fade-in-50">
+                  {/* User Name Display */}
+                  {userName && (
+                    <div className="px-4 py-3 border-b border-gray-200">
+                      <p className="text-sm font-bold text-primary truncate">{userName}</p>
+                      <p className="text-xs text-gray-600">View & Edit Profile</p>
+                    </div>
+                  )}
+
+                  {/* Work Status */}
                   {workStatus && (
                     <>
                       <div className="px-4 py-2 border-b border-gray-200">
@@ -237,8 +259,8 @@ function Navbar() {
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-2.5 rounded-lg font-semibold transition-all ${isActive(link.path)
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-gray-700 hover:bg-background hover:text-secondary'
+                  ? 'bg-primary text-white shadow-md'
+                  : 'text-gray-700 hover:bg-background hover:text-secondary'
                   }`}
               >
                 {link.label}

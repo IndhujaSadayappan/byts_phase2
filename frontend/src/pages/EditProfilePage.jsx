@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { ArrowLeft, Save, Loader, X } from "lucide-react";
+import { ArrowLeft, Save, Loader, X, Camera, Trash2 } from "lucide-react";
 import MainLayout from "../components/MainLayout";
 import '../index.css';
 
@@ -14,6 +14,8 @@ function EditProfile() {
   const navigate = useNavigate();
   const location = useLocation();
   const workStatusRef = useRef(null);
+  const fileInputRef = useRef(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     rollNumber: "",
@@ -36,6 +38,7 @@ function EditProfile() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // Common options
   const years = ["1st", "2nd", "3rd", "4th"];
@@ -129,6 +132,64 @@ function EditProfile() {
     }));
   };
 
+  // Profile Picture Handlers
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      setError('Please upload a valid image file (JPEG, PNG, GIF, or WebP)');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      setError('Image size must be less than 5MB');
+      return;
+    }
+
+    setUploadingImage(true);
+    setError(null);
+
+    try {
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          profilePicture: reader.result,
+        }));
+        setUploadingImage(false);
+      };
+      reader.onerror = () => {
+        setError('Failed to read image file');
+        setUploadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      setError('Failed to upload image');
+      setUploadingImage(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({
+      ...prev,
+      profilePicture: "",
+    }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -137,7 +198,7 @@ function EditProfile() {
 
     try {
       const token = localStorage.getItem("authToken");
-      
+
       if (!token) {
         throw new Error("Authentication token not found. Please login again.");
       }
@@ -154,7 +215,7 @@ function EditProfile() {
 
       if (!res.ok) {
         const errData = await res.json();
-        
+
         // Handle validation errors from backend
         if (errData.errors) {
           const errorMessages = Object.entries(errData.errors)
@@ -162,12 +223,12 @@ function EditProfile() {
             .join("\n");
           throw new Error(errorMessages || errData.message || "Validation failed");
         }
-        
+
         throw new Error(errData.message || "Failed to update profile");
       }
 
       const data = await res.json();
-      
+
       // Update localStorage with new profile data
       localStorage.setItem('user', JSON.stringify({
         ...JSON.parse(localStorage.getItem('user') || '{}'),
@@ -226,6 +287,87 @@ function EditProfile() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Profile Picture Section */}
+            <section className="bg-gradient-to-br from-background to-white rounded-xl p-6 border-2 border-accent">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">Profile Picture</h2>
+
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                {/* Profile Picture Preview */}
+                <div className="relative">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                    {uploadingImage ? (
+                      <Loader className="animate-spin text-white" size={32} />
+                    ) : formData.profilePicture ? (
+                      <img
+                        src={formData.profilePicture}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-white text-4xl font-bold">
+                        {formData.fullName ? formData.fullName.charAt(0).toUpperCase() : '?'}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Edit/Remove Overlay */}
+                  {formData.profilePicture && !uploadingImage && (
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition shadow-md"
+                      title="Remove picture"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  )}
+                </div>
+
+                {/* Upload Instructions */}
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {formData.profilePicture ? 'Update Your Photo' : 'Add Your Photo'}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Upload a professional photo. Accepted formats: JPEG, PNG, GIF, WebP (Max 5MB)
+                  </p>
+
+                  <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                    <button
+                      type="button"
+                      onClick={handleImageClick}
+                      disabled={uploadingImage}
+                      className="px-6 py-2.5 bg-secondary text-white font-semibold rounded-lg shadow-md hover:bg-accent transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <Camera size={18} />
+                      {formData.profilePicture ? 'Change Photo' : 'Upload Photo'}
+                    </button>
+
+                    {formData.profilePicture && (
+                      <button
+                        type="button"
+                        onClick={handleRemoveImage}
+                        disabled={uploadingImage}
+                        className="px-6 py-2.5 border-2 border-red-500 text-red-500 font-semibold rounded-lg hover:bg-red-50 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Trash2 size={18} />
+                        Remove Photo
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Hidden File Input */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </div>
+              </div>
+            </section>
+
             {/* Personal Info */}
             <section>
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
