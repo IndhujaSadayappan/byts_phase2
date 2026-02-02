@@ -1,0 +1,7 @@
+{
+  "to": "harispm.23cse@kongu.edu",
+  "subject": "Password Reset Request - PlaceHub",
+  "resetLink": "http://localhost:3000/reset-password?token=0751c1fa7f0d7305c473bb006699fc83d1dfc15db49a20bbbecfd3dce39af4ca",
+  "token": "0751c1fa7f0d7305c473bb006699fc83d1dfc15db49a20bbbecfd3dce39af4ca",
+  "timestamp": "2026-02-02T12:01:04.400Z"
+}
