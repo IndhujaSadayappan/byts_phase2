@@ -3,7 +3,7 @@ import { QuestionInbox } from "./QuestionInbox";
 import { ChatThread } from "./ChatThread";
 import { CreateQuestionFlow } from "./CreateQuestionFlow";
 import { cn } from "../../lib/utils";
-import { questionService, answerService, sessionService } from "../../services/api";
+import { anonQuestionService, answerService, sessionService } from "../../services/api";
 
 const ANIMALS = ["🦊", "🐼", "🦁", "🐨", "🦉", "🐸", "🦋", "🐙", "🦜", "🐢", "🦈", "🐝"];
 
@@ -70,7 +70,7 @@ export const ChatContainer = ({ className }) => {
 
     const fetchQuestions = async () => {
         try {
-            const res = await questionService.getQuestions();
+            const res = await anonQuestionService.getQuestions();
             setQuestions(res.data);
         } catch (error) {
             console.error("Error fetching questions:", error);
@@ -105,7 +105,7 @@ export const ChatContainer = ({ className }) => {
 
     const handleSubmitQuestion = async (questionText) => {
         try {
-            const res = await questionService.createQuestion(
+            const res = await anonQuestionService.createQuestion(
                 questionText,
                 localStorage.getItem('anonq_session_id')
             );
@@ -148,7 +148,7 @@ export const ChatContainer = ({ className }) => {
 
     const handleArchive = async (questionId) => {
         try {
-            await questionService.updateStatus(questionId, 'archived');
+            await anonQuestionService.updateStatus(questionId, 'archived');
             setQuestions(prev => prev.map(q =>
                 (q._id === questionId) ? { ...q, status: 'archived' } : q
             ));

@@ -19,9 +19,13 @@ function LoginPage() {
       if (response.data.success) {
         localStorage.setItem('authToken', response.data.token)
         localStorage.setItem('userId', response.data.userId)
+        localStorage.setItem('userRole', response.data.role || 'user')
 
-        if (response.data.profileCompleted) {
-          navigate('/home')
+        // Check if user is admin
+        if (response.data.role === 'admin') {
+          navigate('/admin', { replace: true })
+        } else if (response.data.profileCompleted) {
+          navigate('/home', { replace: true })
         } else {
           navigate('/profile-setup')
         }
@@ -35,7 +39,7 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden font-sans">
-      
+
       {/* --- Animated Background Decorative Elements --- */}
       <div className="absolute inset-0 z-0">
         {/* Large soft glow top left */}
@@ -47,7 +51,7 @@ function LoginPage() {
       <div className="relative z-10 w-full max-w-lg px-4">
         {/* --- Main Card --- */}
         <div className="bg-white/80 backdrop-blur-2xl rounded-3xl shadow-[0_20px_50px_rgba(7,25,82,0.15)] border border-white/50 p-8 md:p-10 transition-all duration-300">
-          
+
           {/* Header Section */}
           <div className="text-center mb-10">
             <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-primary via-secondary to-accent rounded-2xl shadow-lg mb-5 transform transition-transform hover:scale-110 duration-300">
@@ -61,7 +65,7 @@ function LoginPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            
+
             <h1 className="text-4xl font-extrabold text-primary tracking-tight mb-2">
               Place<span className="text-secondary">Hub</span>
             </h1>
@@ -99,9 +103,9 @@ function LoginPage() {
             </div>
           </div>
         </div>
-        
+
         {/* Minimal Footer Info */}
-        
+
       </div>
     </div>
   )

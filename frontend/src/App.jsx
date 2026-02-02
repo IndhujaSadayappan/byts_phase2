@@ -9,7 +9,15 @@ import ShareExperienceLanding from './pages/ShareExperienceLanding.jsx'
 import ExperienceMetadataForm from './pages/ExperienceMetadataForm.jsx'
 import ExperienceRoundsForm from './pages/ExperienceRoundsForm.jsx'
 import ExperienceMaterialsForm from './pages/ExperienceMaterialsForm.jsx'
+import MentorshipPage from './pages/MentorshipPage.jsx'
+import MessagesPage from './pages/MessagesPage.jsx'
+import MeetingsPage from './pages/MeetingsPage.jsx'
+import QuestionsPage from './pages/QuestionsPage.jsx'
+import VideoMeetingPage from './pages/VideoMeetingPage.jsx'
+import AdminDashboardPage from './pages/AdminDashboardPage.jsx'
+import UnderDevelopmentPage from './pages/UnderDevelopmentPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import AdminRoute from './components/AdminRoute.jsx'
 import './App.css'
 import About from './pages/About.jsx'
 
@@ -27,17 +35,25 @@ function App() {
           path="/home"
           element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}
         />
-        <Route 
-          path="/about" 
-          element={<ProtectedRoute><About /></ProtectedRoute>} 
+        <Route
+          path="/about"
+          element={<ProtectedRoute><About /></ProtectedRoute>}
         />
         <Route
           path="/profile"
           element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}
         />
         <Route
+          path="/profile/:id"
+          element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}
+        />
+        <Route
           path="/edit-profile"
           element={<ProtectedRoute><EditProfilePage /></ProtectedRoute>}
+        />
+        <Route
+          path="/my-experiences"
+          element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}
         />
         <Route
           path="/share-experience"
@@ -55,7 +71,42 @@ function App() {
           path="/share-experience/materials"
           element={<ProtectedRoute><ExperienceMaterialsForm /></ProtectedRoute>}
         />
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route
+          path="/mentorship"
+          element={<ProtectedRoute><MentorshipPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/messages"
+          element={<ProtectedRoute><MessagesPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/meetings"
+          element={<ProtectedRoute><MeetingsPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/questions"
+          element={<ProtectedRoute><QuestionsPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/meeting/:meetingId"
+          element={<ProtectedRoute><VideoMeetingPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/admin"
+          element={<AdminRoute><AdminDashboardPage /></AdminRoute>}
+        />
+
+        {/* Under Development Routes */}
+        <Route path="/materials" element={<ProtectedRoute><UnderDevelopmentPage /></ProtectedRoute>} />
+        <Route path="/analytics" element={<ProtectedRoute><UnderDevelopmentPage /></ProtectedRoute>} />
+        <Route path="/opportunities" element={<ProtectedRoute><UnderDevelopmentPage /></ProtectedRoute>} />
+        <Route path="/contact" element={<ProtectedRoute><UnderDevelopmentPage /></ProtectedRoute>} />
+
+        <Route path="/" element={
+          localStorage.getItem('userRole') === 'admin'
+            ? <Navigate to="/admin" replace />
+            : <Navigate to="/home" replace />
+        } />
       </Routes>
     </Router>
   )

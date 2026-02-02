@@ -1,4 +1,4 @@
-import Question from '../models/Question.js';
+import Question from '../models/AnonQuestion.js';
 import Answer from '../models/Answer.js';
 
 export const createQuestion = async (req, res) => {

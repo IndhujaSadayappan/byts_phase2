@@ -1,4 +1,4 @@
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 import Answer from '../models/Answer.js';
 
 export default function setupWebSocket(server) {

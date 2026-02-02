@@ -25,6 +25,8 @@ api.interceptors.request.use(
 export const authAPI = {
   signup: (data) => api.post('/auth/signup', data),
   login: (data) => api.post('/auth/login', data),
+  getMe: () => api.get('/auth/me'),
+  updatePreferences: (data) => api.patch('/auth/preferences', data),
 }
 
 // Profile APIs
@@ -53,11 +55,87 @@ export const experienceAPI = {
   getOptions: () => api.get('/experience/options'),
 }
 
-// Chat APIs
-export const questionService = {
-  getQuestions: () => api.get('/questions'),
-  createQuestion: (text, sessionId) => api.post('/questions', { text, sessionId }),
-  updateStatus: (id, status) => api.patch(`/questions/${id}/status`, { status }),
+// Message APIs
+export const messageAPI = {
+  getConversations: () => api.get('/messages/conversations'),
+  startConversation: (otherUserId) => api.post('/messages/conversations', { otherUserId }),
+  getMessages: (conversationId) => api.get(`/messages/${conversationId}`),
+  sendMessage: (data) => api.post('/messages', data),
+  markAsRead: (conversationId) => api.put(`/messages/${conversationId}/read`),
+}
+
+// Mentorship APIs
+export const mentorshipAPI = {
+  getMentors: (params) => api.get('/mentorship/mentors', { params }),
+  getMentees: (params) => api.get('/mentorship/mentees', { params }),
+  getStats: () => api.get('/mentorship/stats'),
+  sendRequest: (data) => api.post('/mentorship/request', data),
+  getReceivedRequests: (params) => api.get('/mentorship/requests/received', { params }),
+  getSentRequests: (params) => api.get('/mentorship/requests/sent', { params }),
+  respondToRequest: (requestId, status) => api.put(`/mentorship/requests/${requestId}/respond`, { status }),
+  completeRequest: (requestId) => api.put(`/mentorship/requests/${requestId}/complete`),
+  cancelRequest: (requestId, reason) => api.put(`/mentorship/requests/${requestId}/cancel`, { reason }),
+  submitFeedback: (requestId, data) => api.post(`/mentorship/requests/${requestId}/feedback`, data),
+  updateNotes: (requestId, data) => api.put(`/mentorship/requests/${requestId}/notes`, data),
+  incrementSession: (requestId) => api.put(`/mentorship/requests/${requestId}/session`),
+}
+
+// Meeting APIs
+export const meetingAPI = {
+  create: (data) => api.post('/meetings', data),
+  getMeetings: (params) => api.get('/meetings', { params }),
+  getMeetingById: (meetingId) => api.get(`/meetings/${meetingId}`),
+  update: (meetingId, data) => api.put(`/meetings/${meetingId}`, data),
+  cancel: (meetingId, reason) => api.put(`/meetings/${meetingId}/cancel`, { reason }),
+  complete: (meetingId, notes) => api.put(`/meetings/${meetingId}/complete`, { notes }),
+}
+
+// Question APIs (Q&A Forum)
+export const questionAPI = {
+  create: (data) => api.post('/questions', data),
+  getAll: (params) => api.get('/questions', { params }),
+  getById: (questionId) => api.get(`/questions/${questionId}`),
+  getMyQuestions: () => api.get('/questions/my'),
+  addAnswer: (questionId, content) => api.post(`/questions/${questionId}/answers`, { content }),
+  markAnswerHelpful: (questionId, answerId) => api.put(`/questions/${questionId}/answers/${answerId}/helpful`),
+  markAsResolved: (questionId) => api.put(`/questions/${questionId}/resolve`),
+  delete: (questionId) => api.delete(`/questions/${questionId}`),
+}
+
+// Notification APIs
+export const notificationAPI = {
+  getAll: (params) => api.get('/notifications', { params }),
+  markAsRead: (notificationId) => api.put(`/notifications/${notificationId}/read`),
+  markAllAsRead: () => api.put('/notifications/read-all'),
+  delete: (notificationId) => api.delete(`/notifications/${notificationId}`),
+  report: (data) => api.post('/notifications/report', data),
+  blockUser: (blockedUserId, reason) => api.post('/notifications/block', { blockedUserId, reason }),
+  unblockUser: (blockedUserId) => api.delete(`/notifications/block/${blockedUserId}`),
+  getBlockedUsers: () => api.get('/notifications/blocked'),
+}
+
+// Admin APIs
+export const adminAPI = {
+  getStats: () => api.get('/admin/stats'),
+  getUsers: (params) => api.get('/admin/users', { params }),
+  getStudents: (params) => api.get('/admin/students', { params }),
+  getPlacedStudents: (params) => api.get('/admin/placed-students', { params }),
+  getProblems: (params) => api.get('/admin/problems', { params }),
+  getStudentDetail: (id) => api.get(`/admin/students/${id}`),
+  getProblemDetail: (id) => api.get(`/admin/problems/${id}`),
+  deleteUser: (id) => api.delete(`/admin/users/${id}`),
+  deleteStudent: (id) => api.delete(`/admin/students/${id}`),
+  deleteProblem: (id, reason) => api.post(`/admin/problems/${id}/delete`, { reason }),
+  getMeetings: () => api.get('/admin/meetings'),
+  updateMeeting: (id, data) => api.put(`/admin/meetings/${id}`, data),
+  getLogs: (params) => api.get('/admin/logs', { params }),
+}
+
+// Anonymous Chat APIs (kept separate from Q&A forum)
+export const anonQuestionService = {
+  getQuestions: () => api.get('/anon-questions'),
+  createQuestion: (text, sessionId) => api.post('/anon-questions', { text, sessionId }),
+  updateStatus: (id, status) => api.patch(`/anon-questions/${id}/status`, { status }),
 }
 
 export const answerService = {
@@ -67,7 +145,5 @@ export const answerService = {
 export const sessionService = {
   init: (data) => api.post('/sessions/init', data),
 }
-
-
 
 export default api

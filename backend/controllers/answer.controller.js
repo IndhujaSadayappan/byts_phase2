@@ -1,5 +1,5 @@
 import Answer from '../models/Answer.js';
-import Question from '../models/Question.js';
+import Question from '../models/AnonQuestion.js';
 
 export const addAnswer = async (req, res) => {
     try {
