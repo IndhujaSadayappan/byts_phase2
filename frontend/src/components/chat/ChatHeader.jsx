@@ -73,10 +73,10 @@ export const ChatHeader = ({
                             isMenuOpen && "bg-secondary text-primary"
                         )}
                     >
-                        <MoreVertical className="w-5 h-5" />
+                        {/* <MoreVertical className="w-5 h-5" /> */}
                     </button>
 
-                    {isMenuOpen && (
+                    {/* {isMenuOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-card border border-border rounded-xl shadow-xl py-1.5 animate-in fade-in zoom-in-95 duration-100 z-50">
                             {onArchive && (
                                 <button
@@ -116,7 +116,7 @@ export const ChatHeader = ({
                                 Report Question
                             </button>
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>

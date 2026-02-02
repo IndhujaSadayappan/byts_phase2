@@ -11,6 +11,7 @@ import setupWebSocket from './websocket/socket.js';
 import questionRoutes from './routes/question.routes.js';
 import answerRoutes from './routes/answer.routes.js';
 import sessionRoutes from './routes/session.routes.js';
+import { startArchiveScheduler } from './utils/archiveScheduler.js';
 
 
 dotenv.config()
@@ -43,7 +44,12 @@ app.get('/api/health', (req, res) => {
 })
 
 const server = http.createServer(app);
-setupWebSocket(server);// Start server
+setupWebSocket(server);
+
+// Start auto-archive scheduler
+startArchiveScheduler();
+
+// Start server
 const PORT = process.env.PORT || 5000
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
