@@ -2,7 +2,12 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
+dotenv.config()
+
 import http from 'http';
+import session from 'express-session';
+import passport from 'passport';
+import './config/passport.js';
 
 import authRoutes from './routes/authRoutes.js'
 import profileRoutes from './routes/profileRoutes.js'
@@ -13,15 +18,24 @@ import answerRoutes from './routes/answer.routes.js';
 import sessionRoutes from './routes/session.routes.js';
 import { startArchiveScheduler } from './utils/archiveScheduler.js';
 
-
-dotenv.config()
-
 const app = express()
 
 // Middleware
 app.use(cors())
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ limit: '10mb', extended: true }))
+
+// Session configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'your_session_secret',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Database connection
 mongoose
@@ -71,13 +85,13 @@ server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-// Handle Unhandled Promise Rejections (e.g. database connection failures)
+// Handle Unhandled Promise Rejections
 process.on('unhandledRejection', (reason, promise) => {
   console.error('UNHANDLED REJECTION! 💥');
   console.error('Reason:', reason);
 });
 
-// Handle Uncaught Exceptions (Synchronous code errors)
+// Handle Uncaught Exceptions
 process.on('uncaughtException', (err) => {
   console.error('UNCAUGHT EXCEPTION! 💥');
   console.error(err.name, err.message);

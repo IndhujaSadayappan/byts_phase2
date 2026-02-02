@@ -71,28 +71,25 @@ function MultiStepForm({ onSubmit, isLoading }) {
               className={`flex flex-col items-center flex-1 ${step.id !== STEPS.length ? 'relative' : ''}`}
             >
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition ${
-                  step.id <= currentStep
-                    ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition ${step.id <= currentStep
+                    ? 'bg-primary text-white'
                     : 'bg-gray-200 text-gray-600'
-                }`}
+                  }`}
               >
                 {step.id}
               </div>
               <span
-                className={`text-xs mt-2 text-center font-medium ${
-                  step.id <= currentStep ? 'text-primary' : 'text-gray-500'
-                }`}
+                className={`text-xs mt-2 text-center font-medium ${step.id <= currentStep ? 'text-primary' : 'text-gray-500'
+                  }`}
               >
                 {step.title}
               </span>
               {step.id !== STEPS.length && (
                 <div
-                  className={`absolute top-5 left-1/2 w-1/2 h-0.5 transition ${
-                    step.id < currentStep
-                      ? 'bg-gradient-to-r from-primary to-secondary'
+                  className={`absolute top-5 left-1/2 w-1/2 h-0.5 transition ${step.id < currentStep
+                      ? 'bg-primary'
                       : 'bg-gray-200'
-                  }`}
+                    }`}
                   style={{ transform: 'translateX(50%)' }}
                 />
               )}
@@ -101,7 +98,7 @@ function MultiStepForm({ onSubmit, isLoading }) {
         </div>
         <div className="w-full bg-gray-200 rounded-full h-1">
           <div
-            className="bg-gradient-to-r from-primary to-secondary h-1 rounded-full transition-all"
+            className="bg-primary h-1 rounded-full transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -126,7 +123,7 @@ function MultiStepForm({ onSubmit, isLoading }) {
           <button
             onClick={handleSubmit}
             disabled={isLoading}
-            className="px-8 py-2.5 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+            className="px-8 py-2.5 rounded-lg bg-primary text-white font-semibold hover:bg-primary/90 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -140,7 +137,7 @@ function MultiStepForm({ onSubmit, isLoading }) {
         ) : (
           <button
             onClick={handleNext}
-            className="px-8 py-2.5 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg transform hover:scale-105 transition-all"
+            className="px-8 py-2.5 rounded-lg bg-primary text-white font-semibold hover:bg-primary/90 hover:shadow-lg transition-all"
           >
             Next
           </button>

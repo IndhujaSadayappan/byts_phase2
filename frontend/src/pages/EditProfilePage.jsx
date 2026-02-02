@@ -288,13 +288,13 @@ function EditProfile() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Profile Picture Section */}
-            <section className="bg-gradient-to-br from-background to-white rounded-xl p-6 border-2 border-accent">
+            <section className="bg-background rounded-xl p-6 border-2 border-accent">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Profile Picture</h2>
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 {/* Profile Picture Preview */}
                 <div className="relative">
-                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-primary flex items-center justify-center">
                     {uploadingImage ? (
                       <Loader className="animate-spin text-white" size={32} />
                     ) : formData.profilePicture ? (

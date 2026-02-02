@@ -10,7 +10,6 @@ export const signup = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body
 
-    // Comprehensive validation using validation utilities
     const validation = validateSignupData({ email, password, confirmPassword })
 
     if (!validation.isValid) {
@@ -21,7 +20,6 @@ export const signup = async (req, res) => {
       })
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email: email.toLowerCase().trim() })
     if (existingUser) {
       return res.status(400).json({
@@ -30,11 +28,9 @@ export const signup = async (req, res) => {
       })
     }
 
-    // Create new user
     const user = new User({ email: email.toLowerCase().trim(), password })
     await user.save()
 
-    // Generate token
     const token = generateToken(user._id)
 
     res.status(201).json({
@@ -55,7 +51,6 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    // Comprehensive validation using validation utilities
     const validation = validateLoginData({ email, password })
 
     if (!validation.isValid) {
@@ -66,7 +61,6 @@ export const login = async (req, res) => {
       })
     }
 
-    // Find user
     const user = await User.findOne({ email: email.toLowerCase().trim() })
     if (!user) {
       return res.status(400).json({
@@ -75,7 +69,6 @@ export const login = async (req, res) => {
       })
     }
 
-    // Compare password
     const isPasswordValid = await user.comparePassword(password)
     if (!isPasswordValid) {
       return res.status(400).json({
@@ -84,7 +77,6 @@ export const login = async (req, res) => {
       })
     }
 
-    // Generate token
     const token = generateToken(user._id)
 
     res.status(200).json({
@@ -94,6 +86,20 @@ export const login = async (req, res) => {
       userId: user._id,
       profileCompleted: user.profileCompleted,
     })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
+
+export const authCallback = async (req, res) => {
+  try {
+    const token = generateToken(req.user._id)
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000'
+
+    res.redirect(`${frontendUrl}/oauth-success?token=${token}&userId=${req.user._id}&profileCompleted=${req.user.profileCompleted}`)
   } catch (error) {
     res.status(500).json({
       success: false,

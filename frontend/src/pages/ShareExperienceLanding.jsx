@@ -36,7 +36,7 @@ function ShareExperienceLanding() {
           {/* Decorative Background Elements */}
           <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-accent opacity-5"></div>
           <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-secondary opacity-5"></div>
-          
+
           <div className="relative z-10">
             <h1 className="text-5xl font-bold text-primary mb-4 leading-tight">
               Share Your Placement Journey
@@ -68,9 +68,9 @@ function ShareExperienceLanding() {
                 >
                   {/* Decorative Circle */}
                   <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-accent opacity-5 group-hover:opacity-10 transition-opacity"></div>
-                  
+
                   <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-6 shadow-md group-hover:shadow-lg transition-shadow">
+                    <div className="w-16 h-16 rounded-lg bg-primary flex items-center justify-center mx-auto mb-6 shadow-md group-hover:shadow-lg transition-shadow">
                       <Icon size={32} className="text-white" />
                     </div>
                     <h3 className="text-xl font-bold text-primary mb-3">{benefit.title}</h3>
@@ -83,7 +83,7 @@ function ShareExperienceLanding() {
         </section>
 
         {/* What We Collect Section */}
-        
+
         {/* Timeline Section */}
         <section className="mb-16">
           <h2 className="text-4xl font-bold text-primary text-center mb-12">
@@ -93,10 +93,10 @@ function ShareExperienceLanding() {
             {/* Step 1 */}
             <div className="flex gap-6 items-start">
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center font-bold text-2xl shadow-lg">
+                <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center font-bold text-2xl shadow-lg">
                   1
                 </div>
-                <div className="w-1 h-24 bg-gradient-to-b from-primary to-secondary my-2"></div>
+                <div className="w-1 h-24 bg-primary my-2"></div>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-8 flex-1 border border-gray-100 hover:border-accent hover:shadow-xl transition-all relative overflow-hidden group">
                 <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-accent opacity-5 group-hover:opacity-10 transition-opacity"></div>
@@ -112,10 +112,10 @@ function ShareExperienceLanding() {
             {/* Step 2 */}
             <div className="flex gap-6 items-start">
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-secondary to-accent text-white flex items-center justify-center font-bold text-2xl shadow-lg">
+                <div className="w-16 h-16 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-2xl shadow-lg">
                   2
                 </div>
-                <div className="w-1 h-24 bg-gradient-to-b from-secondary to-accent my-2"></div>
+                <div className="w-1 h-24 bg-secondary my-2"></div>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-8 flex-1 border border-gray-100 hover:border-secondary hover:shadow-xl transition-all relative overflow-hidden group">
                 <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-secondary opacity-5 group-hover:opacity-10 transition-opacity"></div>
@@ -131,7 +131,7 @@ function ShareExperienceLanding() {
             {/* Step 3 */}
             <div className="flex gap-6 items-start">
               <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary text-white flex items-center justify-center font-bold text-2xl shadow-lg">
+                <div className="w-16 h-16 rounded-full bg-accent text-white flex items-center justify-center font-bold text-2xl shadow-lg">
                   3
                 </div>
               </div>
@@ -153,7 +153,7 @@ function ShareExperienceLanding() {
           {/* Decorative Elements */}
           <div className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-primary opacity-5"></div>
           <div className="absolute -bottom-16 -right-16 w-40 h-40 rounded-full bg-secondary opacity-5"></div>
-          
+
           <div className="relative z-10">
             <h2 className="text-4xl font-bold text-primary mb-4">Ready to Help Others?</h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">

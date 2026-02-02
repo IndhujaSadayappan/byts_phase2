@@ -45,7 +45,7 @@ function HomePage() {
   return (
     // Body background uses a very subtle gray to make the white cards "pop"
     <div className="min-h-screen bg-[#F8FAFC] font-sans text-primary selection:bg-accent selection:text-white">
-      
+
       {/* --- Premium Navigation --- */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
@@ -60,7 +60,7 @@ function HomePage() {
               <span className="text-[10px] font-bold text-accent uppercase tracking-[0.3em]">Student Dashboard</span>
             </div>
           </div>
-          
+
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 px-6 py-2.5 rounded-xl border-2 border-gray-100 text-primary font-bold text-sm hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 active:scale-95"
@@ -89,7 +89,7 @@ function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* --- Left Column: Identity Card --- */}
           <div className="lg:col-span-4 space-y-6">
             <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
@@ -101,7 +101,7 @@ function HomePage() {
                     className="w-full h-full rounded-[2rem] object-cover border-4 border-[#EBF4F6]"
                   />
                 ) : (
-                  <div className="w-full h-full rounded-[2rem] bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-white text-4xl font-black">
+                  <div className="w-full h-full rounded-[2rem] bg-primary flex items-center justify-center text-white text-4xl font-black">
                     {profile?.fullName?.charAt(0)}
                   </div>
                 )}
@@ -118,13 +118,12 @@ function HomePage() {
               <div className="space-y-3">
                 <div className="p-4 rounded-2xl bg-[#EBF4F6]/30 border border-[#EBF4F6] flex justify-between items-center">
                   <span className="text-[10px] font-black uppercase text-gray-400 tracking-wider">Status</span>
-                  <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${
-                    profile?.placementStatus === 'placed' ? 'bg-green-500 text-white' : 'bg-secondary text-white'
-                  }`}>
+                  <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${profile?.placementStatus === 'placed' ? 'bg-green-500 text-white' : 'bg-secondary text-white'
+                    }`}>
                     {profile?.placementStatus || 'Active'}
                   </span>
                 </div>
-                
+
                 {profile?.placementStatus === 'placed' && (
                   <div className="p-5 rounded-2xl bg-primary text-white shadow-lg shadow-primary/20">
                     <p className="text-[10px] font-bold opacity-60 uppercase tracking-widest mb-1">Hired At</p>
@@ -142,27 +141,27 @@ function HomePage() {
 
           {/* --- Right Column: Intelligence Grids --- */}
           <div className="lg:col-span-8 space-y-8">
-            
+
             {/* Horizontal Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-               <div className="bg-white border border-gray-100 p-8 rounded-[2rem] flex items-center justify-between group hover:border-secondary transition-colors">
-                  <div>
-                    <p className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Skills Found</p>
-                    <p className="text-4xl font-black text-primary">{profile?.skills?.length || 0}</p>
-                  </div>
-                  <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                  </div>
-               </div>
-               <div className="bg-white border border-gray-100 p-8 rounded-[2rem] flex items-center justify-between group hover:border-accent transition-colors">
-                  <div>
-                    <p className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Profile View</p>
-                    <p className="text-4xl font-black text-primary">High</p>
-                  </div>
-                  <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                  </div>
-               </div>
+              <div className="bg-white border border-gray-100 p-8 rounded-[2rem] flex items-center justify-between group hover:border-secondary transition-colors">
+                <div>
+                  <p className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Skills Found</p>
+                  <p className="text-4xl font-black text-primary">{profile?.skills?.length || 0}</p>
+                </div>
+                <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+              </div>
+              <div className="bg-white border border-gray-100 p-8 rounded-[2rem] flex items-center justify-between group hover:border-accent transition-colors">
+                <div>
+                  <p className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Profile View</p>
+                  <p className="text-4xl font-black text-primary">High</p>
+                </div>
+                <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                </div>
+              </div>
             </div>
 
             {/* Professional Grid: Technical Skills */}
@@ -184,7 +183,7 @@ function HomePage() {
             {/* High-Impact Social Grid */}
             <div className="bg-primary rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-primary/40">
               <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/20 rounded-full -mr-32 -mt-32 blur-[80px]"></div>
-              
+
               <div className="relative z-10">
                 <h3 className="text-xl font-black mb-8 tracking-tight">Professional Networking</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

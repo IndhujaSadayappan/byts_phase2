@@ -15,7 +15,7 @@ const TermsModal = ({ isOpen, onClose, accepted, onAcceptChange }) => {
     const element = e.target;
     const threshold = 10; // pixels from bottom
     const isAtBottom = element.scrollHeight - element.scrollTop - element.clientHeight < threshold;
-    
+
     if (isAtBottom && !hasScrolledToBottom) {
       setHasScrolledToBottom(true);
     }
@@ -27,7 +27,7 @@ const TermsModal = ({ isOpen, onClose, accepted, onAcceptChange }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
       <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-primary to-secondary">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-primary">
           <h2 className="text-2xl font-bold text-white">Terms and Conditions</h2>
           <button
             onClick={onClose}
@@ -48,13 +48,13 @@ const TermsModal = ({ isOpen, onClose, accepted, onAcceptChange }) => {
         )}
 
         {/* Content */}
-        <div 
+        <div
           ref={contentRef}
           onScroll={handleScroll}
           className="overflow-y-auto p-6 flex-1"
         >
           <div className="prose prose-sm max-w-none text-gray-700">
-            
+
             {/* Section 1 */}
             <section className="mb-6">
               <h3 className="text-lg font-bold text-primary mb-3">1. Acceptance of Terms</h3>
@@ -232,23 +232,23 @@ const TermsModal = ({ isOpen, onClose, accepted, onAcceptChange }) => {
               disabled={!hasScrolledToBottom}
               className="w-5 h-5 mt-1 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             />
-            <label 
-              htmlFor="acceptTermsModal" 
+            <label
+              htmlFor="acceptTermsModal"
               className={`ml-3 text-sm font-medium ${!hasScrolledToBottom ? 'text-gray-400' : 'text-gray-700'}`}
             >
               I have read and agree to all the Terms and Conditions
             </label>
           </div>
-          
+
           {!hasScrolledToBottom && (
             <p className="text-xs text-red-600 mb-3 text-center">
               ⚠️ Please scroll to the bottom to enable the checkbox
             </p>
           )}
-          
+
           <button
             onClick={onClose}
-            className="w-full py-3 px-6 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all"
+            className="w-full py-3 px-6 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 hover:shadow-lg transition-all"
           >
             {accepted ? 'Continue' : 'Close'}
           </button>

@@ -71,7 +71,7 @@ const audience = [
 function AboutPage() {
   return (
     <MainLayout>
-      <div className="bg-gradient-to-b from-[#ebf4f6] via-white to-[#f6fbfc] min-h-screen text-primary">
+      <div className="bg-background min-h-screen text-primary">
         {/* Hero */}
         <section className="max-w-5xl mx-auto px-6 pt-28 pb-16">
           <p className="uppercase tracking-[0.4em] text-xs text-secondary font-semibold">About PlaceHub</p>
@@ -141,7 +141,7 @@ function AboutPage() {
         </section>
 
         {/* Audience */}
-        <section className="bg-gradient-to-r from-primary/5 to-secondary/5 border-y border-slate-200/70">
+        <section className="bg-background border-y border-slate-200/70">
           <div className="max-w-5xl mx-auto px-6 py-16">
             <p className="text-sm uppercase tracking-[0.3em] text-secondary font-semibold">Who is this for?</p>
             <h2 className="text-3xl font-bold mt-3 mb-6">Built for every player in the placement journey.</h2>
@@ -179,7 +179,7 @@ function AboutPage() {
         </section>
 
         <section className="max-w-4xl mx-auto px-6 pb-20">
-          <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl text-white p-10 shadow-2xl">
+          <div className="bg-primary rounded-3xl text-white p-10 shadow-2xl">
             <h3 className="text-3xl font-bold mb-3">Ready to power your next placement season?</h3>
             <p className="text-white/80 text-lg mb-6">
               Invite seniors to share anonymously, help juniors prepare with confidence, and give placement cells the

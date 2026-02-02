@@ -112,9 +112,8 @@ function SignupForm({ onSubmit, isLoading }) {
           value={formData.email}
           onChange={handleChange}
           placeholder="your.email@college.edu"
-          className={`w-full px-4 py-2.5 rounded-lg border transition focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-            errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
-          }`}
+          className={`w-full px-4 py-2.5 rounded-lg border transition focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
+            }`}
         />
         {errors.email && <p className="text-red-600 text-xs mt-1">{errors.email}</p>}
       </div>
@@ -130,9 +129,8 @@ function SignupForm({ onSubmit, isLoading }) {
           value={formData.password}
           onChange={handleChange}
           placeholder="Create a strong password"
-          className={`w-full px-4 py-2.5 rounded-lg border transition focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-            errors.password ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
-          }`}
+          className={`w-full px-4 py-2.5 rounded-lg border transition focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.password ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
+            }`}
         />
         {formData.password && (
           <div className="mt-2">
@@ -165,9 +163,8 @@ function SignupForm({ onSubmit, isLoading }) {
             value={formData.confirmPassword}
             onChange={handleChange}
             placeholder="Re-enter your password"
-            className={`w-full px-4 py-2.5 rounded-lg border transition focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${
-              errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
-            }`}
+            className={`w-full px-4 py-2.5 rounded-lg border transition focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent ${errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
+              }`}
           />
           {formData.confirmPassword && (
             <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -231,7 +228,7 @@ function SignupForm({ onSubmit, isLoading }) {
       <button
         type="submit"
         disabled={!isFormValid || isLoading}
-        className="w-full py-2.5 px-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+        className="w-full py-2.5 px-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
@@ -243,8 +240,8 @@ function SignupForm({ onSubmit, isLoading }) {
         )}
       </button>
 
-      <TermsModal 
-        isOpen={showTermsModal} 
+      <TermsModal
+        isOpen={showTermsModal}
         onClose={() => setShowTermsModal(false)}
         accepted={formData.acceptTerms}
         onAcceptChange={(checked) => {

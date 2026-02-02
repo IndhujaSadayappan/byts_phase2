@@ -157,7 +157,7 @@ function ExperienceMetadataForm() {
                   {/* Step 1 - Active */}
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center font-bold shadow-md ring-4 ring-accent ring-opacity-20 flex-shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-md ring-4 ring-accent ring-opacity-20 flex-shrink-0">
                         1
                       </div>
                       <div>
@@ -202,7 +202,7 @@ function ExperienceMetadataForm() {
                       <span className="text-xs font-bold text-primary">33%</span>
                     </div>
                     <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-primary to-secondary rounded-full w-1/3 transition-all duration-500"></div>
+                      <div className="h-full bg-primary rounded-full w-1/3 transition-all duration-500"></div>
                     </div>
                   </div>
                 </div>
@@ -246,7 +246,7 @@ function ExperienceMetadataForm() {
                 <div className="relative z-10">
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Company Name */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <Building2 className="text-secondary" size={18} />
                         Company Name <span className="text-red-600">*</span>
@@ -291,7 +291,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Role Applied For */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <Briefcase className="text-secondary" size={18} />
                         Role Applied For <span className="text-red-600">*</span>
@@ -338,7 +338,7 @@ function ExperienceMetadataForm() {
                     {/* Batch & Package Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Batch */}
-                      <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                      <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                         <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                           <GraduationCap className="text-secondary" size={18} />
                           Batch (Graduation Year) <span className="text-red-600">*</span>
@@ -358,7 +358,7 @@ function ExperienceMetadataForm() {
                       </div>
 
                       {/* Package */}
-                      <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                      <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                         <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                           <DollarSign className="text-secondary" size={18} />
                           Package (LPA)
@@ -375,7 +375,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Placement Season */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <TrendingUp className="text-secondary" size={18} />
                         Placement Season
@@ -407,7 +407,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Interview Date */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <Calendar className="text-secondary" size={18} />
                         Interview Date
@@ -446,7 +446,7 @@ function ExperienceMetadataForm() {
                       </div>
                     </div>
                     {/* Difficulty Rating */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <TrendingUp className="text-secondary" size={18} />
                         Difficulty Rating
@@ -458,7 +458,7 @@ function ExperienceMetadataForm() {
                             type="button"
                             onClick={() => setFormData((prev) => ({ ...prev, difficultyRating: rating.toString() }))}
                             className={`flex-1 h-14 rounded-xl font-bold text-lg transition-all shadow-md hover:shadow-lg ${formData.difficultyRating === rating.toString()
-                              ? 'bg-gradient-to-br from-primary to-secondary text-white ring-4 ring-accent ring-opacity-30'
+                              ? 'bg-primary text-white ring-4 ring-accent ring-opacity-30'
                               : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-secondary'
                               }`}
                           >
@@ -470,7 +470,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Preparation Time */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <Clock className="text-secondary" size={18} />
                         Preparation Time (in weeks)
@@ -486,7 +486,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Overall Experience Rating */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <Star className="text-secondary" size={18} />
                         Overall Experience Rating
@@ -498,7 +498,7 @@ function ExperienceMetadataForm() {
                             type="button"
                             onClick={() => setFormData((prev) => ({ ...prev, overallExperienceRating: rating.toString() }))}
                             className={`flex-1 h-14 rounded-xl font-bold text-lg transition-all shadow-md hover:shadow-lg ${formData.overallExperienceRating === rating.toString()
-                              ? 'bg-gradient-to-br from-secondary to-accent text-white ring-4 ring-accent ring-opacity-30'
+                              ? 'bg-secondary text-white ring-4 ring-accent ring-opacity-30'
                               : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-accent'
                               }`}
                           >
@@ -510,7 +510,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Outcome */}
-                    <div className="bg-gradient-to-br from-background to-white rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
+                    <div className="bg-background rounded-xl p-5 border border-gray-200 hover:border-accent transition-all">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
                         <CheckCircle className="text-secondary" size={18} />
                         Outcome <span className="text-red-600">*</span>
@@ -528,7 +528,7 @@ function ExperienceMetadataForm() {
                     </div>
 
                     {/* Auto-save Toggle */}
-                    <div className="flex items-center gap-4 p-5 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border-l-4 border-secondary">
+                    <div className="flex items-center gap-4 p-5 bg-blue-50 rounded-xl border-l-4 border-secondary">
                       <input
                         type="checkbox"
                         checked={autoSave}
@@ -555,7 +555,7 @@ function ExperienceMetadataForm() {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-bold hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:scale-105"
+                        className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
                       >
                         {loading ? 'Processing...' : (
                           <>

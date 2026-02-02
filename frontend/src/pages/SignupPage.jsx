@@ -41,7 +41,7 @@ function SignupPage() {
       <div className="relative z-10 w-full max-w-lg">
         <div className="bg-white rounded-2xl shadow-2xl p-8 backdrop-blur-xl bg-opacity-95 border border-white border-opacity-20">
           <div className="text-center mb-8">
-            <div className="inline-block p-3 bg-gradient-to-br from-primary to-secondary rounded-lg mb-4">
+            <div className="inline-block p-3 bg-primary rounded-lg mb-4">
               <svg
                 className="w-8 h-8 text-white"
                 fill="currentColor"

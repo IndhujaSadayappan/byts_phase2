@@ -94,7 +94,7 @@ function SkillsLinksStep({ formData, onChange }) {
           {formData.skills.map((skill) => (
             <div
               key={skill}
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-primary to-secondary text-white rounded-full text-sm font-medium"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium"
             >
               {skill}
               <button

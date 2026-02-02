@@ -26,16 +26,16 @@ const Avatar = ({ name, imageUrl, size = 'large' }) => {
     '#2A8FA3', // --color-avatar-5
     '#5CB3CC', // --color-avatar-6
   ];
-  
+
   // Use first letter to determine color consistently
   const colorIndex = firstLetter.charCodeAt(0) % avatarColors.length;
   const bgColor = avatarColors[colorIndex];
 
   if (imageUrl) {
     return (
-      <img 
-        src={imageUrl} 
-        alt="avatar" 
+      <img
+        src={imageUrl}
+        alt="avatar"
         className={`${sizeClasses[size]} rounded-full border-4 shadow-lg object-cover`}
         style={{ borderColor: '#088395' }}
       />
@@ -43,7 +43,7 @@ const Avatar = ({ name, imageUrl, size = 'large' }) => {
   }
 
   return (
-    <div 
+    <div
       className={`${sizeClasses[size]} rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold`}
       style={{ backgroundColor: bgColor }}
     >
@@ -66,7 +66,7 @@ function ProfilePage() {
     try {
       setLoading(true);
       const token = localStorage.getItem('authToken');
-      
+
       if (!token) {
         setError('No authentication token found');
         return;
@@ -114,7 +114,7 @@ function ProfilePage() {
         <div className="max-w-7xl mx-auto px-4 py-12">
           <Card className="bg-red-50 border-red-200">
             <p className="text-red-700 font-semibold">Error: {error}</p>
-            <button 
+            <button
               onClick={fetchProfile}
               className="mt-4 px-6 py-2.5 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
             >
@@ -141,13 +141,13 @@ function ProfilePage() {
   return (
     <MainLayout>
       <div className="max-w-7xl mx-auto px-4 py-12 bg-background">
-        
+
         {/* Profile Header Card */}
         <Card className="mb-8 md:col-span-2 relative overflow-hidden group">
           {/* Decorative Elements */}
           <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-accent opacity-10 group-hover:opacity-20 transition-opacity"></div>
           <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-primary opacity-10 group-hover:opacity-20 transition-opacity"></div>
-          
+
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6">
               <div className="relative">
@@ -159,7 +159,7 @@ function ProfilePage() {
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   {profile.year && profile.branch ? `${profile.year} Year - ${profile.branch}` : 'Profile Information'}
                 </p>
-                <button 
+                <button
                   onClick={() => navigate('/edit-profile')}
                   className="px-6 py-2.5 rounded-lg bg-secondary text-white font-semibold hover:bg-accent transition shadow-md hover:shadow-lg flex items-center gap-2"
                 >
@@ -199,14 +199,14 @@ function ProfilePage() {
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          
+
           {/* Currently Working Card */}
           <Card>
             <h3 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
               <Briefcase size={24} className="text-secondary" />
               Current Status
             </h3>
-            
+
             {/* Show individual fields only if they have data */}
             {profile.role && (
               <div className="mb-4">
@@ -214,14 +214,14 @@ function ProfilePage() {
                 <p className="text-lg font-bold text-primary">{profile.role}</p>
               </div>
             )}
-            
+
             {profile.company && (
               <div className="mb-4">
                 <p className="text-gray-600 text-sm font-medium mb-1">Company</p>
                 <p className="text-gray-800 font-semibold">{profile.company}</p>
               </div>
             )}
-            
+
             {profile.internshipType && (
               <div className="mb-4">
                 <p className="text-gray-600 text-sm font-medium mb-1">Type</p>
@@ -230,17 +230,17 @@ function ProfilePage() {
                 </span>
               </div>
             )}
-            
+
             {profile.batch && (
               <div className="mb-4">
                 <p className="text-gray-600 text-sm font-medium mb-1">Batch</p>
                 <p className="text-gray-800 font-semibold">{profile.batch}</p>
               </div>
             )}
-            
+
             {/* Show "Add Work Status" only when both role and company are missing */}
             {!profile.role && !profile.company && (
-              <button 
+              <button
                 onClick={() => navigate('/edit-profile', { state: { scrollTo: 'work-status' } })}
                 className="w-full mt-4 px-4 py-2.5 rounded-lg bg-accent text-white font-semibold hover:bg-primary transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
               >
@@ -281,8 +281,8 @@ function ProfilePage() {
             <ul className="space-y-3">
               {profile.linkedinUrl && (
                 <li>
-                  <a 
-                    href={profile.linkedinUrl} 
+                  <a
+                    href={profile.linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary font-semibold hover:text-accent transition flex items-center gap-2 p-2 rounded-lg hover:bg-background"
@@ -294,8 +294,8 @@ function ProfilePage() {
               )}
               {profile.githubUrl && (
                 <li>
-                  <a 
-                    href={profile.githubUrl} 
+                  <a
+                    href={profile.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-secondary font-semibold hover:text-accent transition flex items-center gap-2 p-2 rounded-lg hover:bg-background"
@@ -321,9 +321,9 @@ function ProfilePage() {
             </h3>
             <div className="flex flex-wrap gap-3">
               {profile.skills.map(skill => (
-                <span 
-                  key={skill} 
-                  className="px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-full text-sm font-semibold hover:shadow-lg transition shadow-md"
+                <span
+                  key={skill}
+                  className="px-4 py-2 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary/90 hover:shadow-lg transition shadow-md"
                 >
                   {skill}
                 </span>

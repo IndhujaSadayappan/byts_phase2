@@ -23,21 +23,18 @@
   --color-muted: #d1e9f0;
   --color-muted-foreground: #5a7a8a;
 
-   --color-avatar-1: #071952; /* Deep Navy */
-  --color-avatar-2: #088395; /* Deep Teal */
-  --color-avatar-3: #37B7C3; /* Bright Cyan */
-  --color-avatar-4: #0F5C7F; /* Dark Teal */
-  --color-avatar-5: #2A8FA3; /* Medium Teal */
-  --color-avatar-6: #5CB3CC; /* Light Cyan */
-/* Success & Status Colors */
+  --color-avatar-1: #071952;
+  --color-avatar-2: #088395;
+  --color-avatar-3: #37B7C3;
+  --color-avatar-4: #0F5C7F;
+  --color-avatar-5: #2A8FA3;
+  --color-avatar-6: #5CB3CC;
+
+  /* Success & Status Colors */
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   --color-info: #3b82f6;
-
-  /* Gradient overlays */
-  --color-gradient-start: #071952;
-  --color-gradient-end: #37B7C3;
 
   /* Borders and Inputs */
   --color-border: #accbd6;
@@ -48,9 +45,36 @@
   --font-sans: "Inter", "system-ui", "sans-serif";
 }
 
-/* Optional: Apply background color to the whole app */
+/* Apply background color to the whole app */
 @layer base {
   body {
     @apply bg-background text-primary;
+  }
+}
+
+/* Utility classes for buttons - solid colors instead of gradients */
+@layer utilities {
+  .btn-primary {
+    @apply bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-all;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white font-semibold rounded-lg hover:bg-secondary/90 transition-all;
+  }
+  
+  .btn-accent {
+    @apply bg-accent text-white font-semibold rounded-lg hover:bg-accent/90 transition-all;
+  }
+  
+  .card-elevated {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow;
+  }
+  
+  .icon-circle {
+    @apply rounded-full bg-primary text-white flex items-center justify-center;
+  }
+  
+  .icon-box {
+    @apply rounded-lg bg-primary text-white flex items-center justify-center;
   }
 }

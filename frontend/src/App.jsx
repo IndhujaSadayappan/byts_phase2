@@ -9,9 +9,15 @@ import ShareExperienceLanding from './pages/ShareExperienceLanding.jsx'
 import ExperienceMetadataForm from './pages/ExperienceMetadataForm.jsx'
 import ExperienceRoundsForm from './pages/ExperienceRoundsForm.jsx'
 import ExperienceMaterialsForm from './pages/ExperienceMaterialsForm.jsx'
+import MaterialsPage from './pages/MaterialsPage.jsx'
+import AnalyticsPage from './pages/AnalyticsPage.jsx'
+import OpportunitiesPage from './pages/OpportunitiesPage.jsx'
+import MentorshipPage from './pages/MentorshipPage.jsx'
+import ContactPage from './pages/ContactPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import './App.css'
 import About from './pages/About.jsx'
+import OAuthSuccessPage from './pages/OAuthSuccessPage.jsx'
 
 function App() {
   return (
@@ -19,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/oauth-success" element={<OAuthSuccessPage />} />
         <Route
           path="/profile-setup"
           element={<ProtectedRoute><ProfileSetupPage /></ProtectedRoute>}
@@ -27,9 +34,9 @@ function App() {
           path="/home"
           element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}
         />
-        <Route 
-          path="/about" 
-          element={<ProtectedRoute><About /></ProtectedRoute>} 
+        <Route
+          path="/about"
+          element={<ProtectedRoute><About /></ProtectedRoute>}
         />
         <Route
           path="/profile"
@@ -55,6 +62,26 @@ function App() {
           path="/share-experience/materials"
           element={<ProtectedRoute><ExperienceMaterialsForm /></ProtectedRoute>}
         />
+        <Route
+          path="/materials"
+          element={<ProtectedRoute><MaterialsPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/analytics"
+          element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/opportunities"
+          element={<ProtectedRoute><OpportunitiesPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/mentorship"
+          element={<ProtectedRoute><MentorshipPage /></ProtectedRoute>}
+        />
+        <Route
+          path="/contact"
+          element={<ProtectedRoute><ContactPage /></ProtectedRoute>}
+        />
         <Route path="/" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
@@ -62,3 +89,4 @@ function App() {
 }
 
 export default App
+
