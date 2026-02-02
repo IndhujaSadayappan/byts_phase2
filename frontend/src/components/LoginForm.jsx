@@ -38,6 +38,17 @@ function LoginForm({ onSubmit, isLoading }) {
     e.preventDefault()
     setError('')
 
+    // Validate required fields
+    if (!formData.email.trim()) {
+      setError('Email is required')
+      return
+    }
+
+    if (!formData.password.trim()) {
+      setError('Password is required')
+      return
+    }
+
     try {
       // Call login API
       const response = await authAPI.login({
@@ -51,12 +62,7 @@ function LoginForm({ onSubmit, isLoading }) {
         // Store auth token
         localStorage.setItem('authToken', data.token)
         localStorage.setItem('userId', data.userId)
-
-        // Store user email 
         localStorage.setItem('userEmail', formData.email)
-
-        // Store profile completed status
-        localStorage.setItem('profileCompleted', data.profileCompleted || false)
 
         // Save email if "Remember me" is checked
         if (formData.rememberMe) {
@@ -96,7 +102,7 @@ function LoginForm({ onSubmit, isLoading }) {
       )}
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-          College Email
+          College Email <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
@@ -112,7 +118,7 @@ function LoginForm({ onSubmit, isLoading }) {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-          Password
+          Password <span className="text-red-500">*</span>
         </label>
         <div className="relative">
           <input
