@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const useIdleTimeout = (timeoutDuration = 2 * 60 * 1000) => { // 2 minutes in milliseconds
@@ -8,7 +8,7 @@ const useIdleTimeout = (timeoutDuration = 2 * 60 * 1000) => { // 2 minutes in mi
   const [showWarning, setShowWarning] = useState(false);
 
   const logout = () => {
-    // Clear all auth data
+    // Clear all auth data  
     localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('token');

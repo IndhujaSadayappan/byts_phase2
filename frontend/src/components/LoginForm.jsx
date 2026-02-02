@@ -1,15 +1,39 @@
 'use client';
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 function LoginForm({ onSubmit, isLoading }) {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false,
+  // Load saved credentials from localStorage on initial render
+  const [formData, setFormData] = useState(() => {
+    const savedCredentials = localStorage.getItem('rememberedCredentials');
+    if (savedCredentials) {
+      const { email, password } = JSON.parse(savedCredentials);
+      return {
+        email: email || '',
+        password: password || '',
+        rememberMe: true,
+      };
+    }
+    return {
+      email: '',
+      password: '',
+      rememberMe: false,
+    };
   })
   const [showPassword, setShowPassword] = useState(false)
+
+  // Save or remove credentials when rememberMe changes or form submits
+  useEffect(() => {
+    if (formData.rememberMe && formData.email && formData.password) {
+      localStorage.setItem('rememberedCredentials', JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }));
+    } else if (!formData.rememberMe) {
+      localStorage.removeItem('rememberedCredentials');
+    }
+  }, [formData.rememberMe, formData.email, formData.password]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -21,6 +45,15 @@ function LoginForm({ onSubmit, isLoading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    // Save credentials if rememberMe is checked
+    if (formData.rememberMe) {
+      localStorage.setItem('rememberedCredentials', JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }));
+    } else {
+      localStorage.removeItem('rememberedCredentials');
+    }
     onSubmit({
       email: formData.email,
       password: formData.password,
@@ -31,7 +64,7 @@ function LoginForm({ onSubmit, isLoading }) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-          College Email
+          Email Address
         </label>
         <input
           type="email"

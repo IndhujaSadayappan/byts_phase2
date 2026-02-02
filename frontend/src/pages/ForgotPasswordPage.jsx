@@ -8,11 +8,13 @@ const ForgotPasswordPage = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [resetLink, setResetLink] = useState(''); // For development testing
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setResetLink('');
 
     try {
       const response = await axios.post('http://localhost:5000/api/password-reset/forgot-password', {
@@ -21,6 +23,10 @@ const ForgotPasswordPage = () => {
 
       if (response.data.success) {
         setSubmitted(true);
+        // Store reset link if returned (development mode)
+        if (response.data.resetLink) {
+          setResetLink(response.data.resetLink);
+        }
       }
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred. Please try again.');
@@ -54,6 +60,22 @@ const ForgotPasswordPage = () => {
                 <li>The link expires in 15 minutes</li>
               </ul>
             </div>
+            
+            {/* Development mode: Show reset link directly */}
+            {resetLink && (
+              <div className="bg-green-50 border border-green-300 rounded-lg p-4 mb-6">
+                <p className="text-sm text-green-800 font-semibold mb-2">
+                  🔧 Development Mode - Reset Link:
+                </p>
+                <a 
+                  href={resetLink}
+                  className="text-sm text-primary hover:text-secondary break-all underline"
+                >
+                  Click here to reset password
+                </a>
+              </div>
+            )}
+            
             <div className="space-y-3">
               <button
                 onClick={() => {

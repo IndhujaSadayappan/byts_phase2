@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import User from '../models/User.js';
 import PasswordReset from '../models/PasswordReset.js';
-import { sendPasswordResetEmail, sendPasswordResetConfirmation } from '../services/emailService.js';
+import { sendPasswordResetEmail, sendPasswordResetConfirmation } from '../services/brevoEmailService.js';
 
 /**
  * @desc    Request password reset
@@ -55,20 +55,14 @@ export const forgotPassword = async (req, res) => {
     });
 
     // Send email with reset link
-    // We send the unhashed token in the email
-    const emailResult = await sendPasswordResetEmail(email, resetToken, user.email);
-
-    if (!emailResult.success) {
-      console.error('Failed to send email:', emailResult.error);
-      // Don't reveal email sending failure to user (security)
-    }
+    await sendPasswordResetEmail(email, resetToken, user.email);
 
     res.status(200).json({
       success: true,
       message: successMessage,
     });
   } catch (error) {
-    console.error('Forgot password error:', error);
+    console.error('❌ Forgot password error:', error);
     res.status(500).json({
       success: false,
       message: 'An error occurred. Please try again later.',
@@ -148,8 +142,8 @@ export const resetPassword = async (req, res) => {
     // Delete all other password reset tokens for this user
     await PasswordReset.deleteMany({ email: passwordReset.email });
 
-    // Send confirmation email
-    await sendPasswordResetConfirmation(user.email, user.email);
+    // Log success
+    console.log(`✅ Password reset successful for: ${user.email}`);
 
     res.status(200).json({
       success: true,
