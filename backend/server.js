@@ -44,6 +44,21 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK' })
 })
 
+// --- Global Error Handling Middleware ---
+app.use((err, req, res, next) => {
+  console.error('--- START OF ERROR ---');
+  console.error(`Error at ${req.method} ${req.url}`);
+  console.error(err.stack);
+  console.error('--- END OF ERROR ---');
+
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || "Something went wrong on the server!",
+    error: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 const server = http.createServer(app);
 setupWebSocket(server);
 
@@ -55,3 +70,16 @@ const PORT = process.env.PORT || 5000
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+// Handle Unhandled Promise Rejections (e.g. database connection failures)
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('UNHANDLED REJECTION! 💥');
+  console.error('Reason:', reason);
+});
+
+// Handle Uncaught Exceptions (Synchronous code errors)
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION! 💥');
+  console.error(err.name, err.message);
+  console.error(err.stack);
+});
