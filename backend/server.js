@@ -17,6 +17,7 @@ import setupWebSocket from './websocket/socket.js';
 import anonQuestionRoutes from './routes/question.routes.js';
 import answerRoutes from './routes/answer.routes.js';
 import sessionRoutes from './routes/session.routes.js';
+import { startArchiveScheduler } from './utils/archiveScheduler.js';
 
 import { requestLogger } from './middlewares/loggerMiddleware.js'
 
@@ -61,6 +62,8 @@ app.get('/api/health', (req, res) => {
 const server = http.createServer(app);
 setupWebSocket(server);
 
+// Start auto-archive scheduler
+startArchiveScheduler();
 // Start server
 const PORT = process.env.PORT || 5000
 server.listen(PORT, () => {

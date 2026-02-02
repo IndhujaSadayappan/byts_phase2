@@ -1,14 +1,30 @@
 'use client';
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { authAPI } from '../services/api'
 
 function LoginForm({ onSubmit, isLoading }) {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false,
   })
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState('')
+
+  // Load saved email if "Remember me" was checked
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('rememberedEmail')
+    if (savedEmail) {
+      setFormData((prev) => ({
+        ...prev,
+        email: savedEmail,
+        rememberMe: true,
+      }))
+    }
+  }, [])
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -18,19 +34,75 @@ function LoginForm({ onSubmit, isLoading }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    onSubmit({
-      email: formData.email,
-      password: formData.password,
-    })
+    setError('')
+
+    // Validate required fields
+    if (!formData.email.trim()) {
+      setError('Email is required')
+      return
+    }
+
+    if (!formData.password.trim()) {
+      setError('Password is required')
+      return
+    }
+
+    try {
+      // Call login API
+      const response = await authAPI.login({
+        email: formData.email,
+        password: formData.password,
+      })
+
+      const data = response.data
+
+      if (data.success && data.token) {
+        // Store auth token
+        localStorage.setItem('authToken', data.token)
+        localStorage.setItem('userId', data.userId)
+        localStorage.setItem('userEmail', formData.email)
+
+        // Save email if "Remember me" is checked
+        if (formData.rememberMe) {
+          localStorage.setItem('rememberedEmail', formData.email)
+        } else {
+          localStorage.removeItem('rememberedEmail')
+        }
+
+        // Call parent onSubmit if provided
+        if (onSubmit) {
+          onSubmit({
+            email: formData.email,
+            password: formData.password,
+          })
+        }
+
+        // Redirect based on profile completion
+        if (data.profileCompleted) {
+          navigate('/home')
+        } else {
+          navigate('/profile-setup')
+        }
+      }
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Login failed. Please try again.'
+      setError(errorMessage)
+      console.error('Login error:', err)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-          College Email
+          College Email <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
@@ -46,7 +118,7 @@ function LoginForm({ onSubmit, isLoading }) {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-          Password
+          Password <span className="text-red-500">*</span>
         </label>
         <div className="relative">
           <input

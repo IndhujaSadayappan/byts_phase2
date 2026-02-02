@@ -103,7 +103,7 @@ function SignupForm({ onSubmit, isLoading }) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-          College Email
+          College Email <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
@@ -121,7 +121,7 @@ function SignupForm({ onSubmit, isLoading }) {
 
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-          Password
+          Password <span className="text-red-500">*</span>
         </label>
         <input
           type="password"
@@ -155,7 +155,7 @@ function SignupForm({ onSubmit, isLoading }) {
 
       <div>
         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-          Confirm Password
+          Confirm Password <span className="text-red-500">*</span>
         </label>
         <div className="relative">
           <input
@@ -198,7 +198,7 @@ function SignupForm({ onSubmit, isLoading }) {
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
         <p className="text-sm text-gray-700 mb-2">
-          By signing up, you must read and accept our Terms & Conditions
+          By signing up, you must read and accept our Terms & Conditions <span className="text-red-500">*</span>
         </p>
         <button
           type="button"

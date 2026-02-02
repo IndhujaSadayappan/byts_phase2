@@ -1,8 +1,10 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import Answer from '../models/Answer.js';
 
+let wss; // Global WebSocket Server instance
+
 export default function setupWebSocket(server) {
-    const wss = new WebSocketServer({ server });
+    wss = new WebSocketServer({ server });
 
     wss.on('connection', (ws) => {
         console.log('Client connected via WebSocket');
@@ -25,15 +27,9 @@ export default function setupWebSocket(server) {
 
                     await answer.save();
 
-                    const broadcastData = JSON.stringify({
+                    broadcastToAll({
                         type: 'ANSWER_RECEIVED',
                         payload: answer,
-                    });
-
-                    wss.clients.forEach((client) => {
-                        if (client.readyState === WebSocket.OPEN) {
-                            client.send(broadcastData);
-                        }
                     });
                 }
 
@@ -49,7 +45,7 @@ export default function setupWebSocket(server) {
                         answer.reactions = reactions;
                         await answer.save();
 
-                        const broadcastData = JSON.stringify({
+                        broadcastToAll({
                             type: 'REACTION_UPDATED',
                             payload: {
                                 answerId,
@@ -57,12 +53,6 @@ export default function setupWebSocket(server) {
                                 triggeredBy: reaction,
                                 timestamp: Date.now()
                             },
-                        });
-
-                        wss.clients.forEach((client) => {
-                            if (client.readyState === WebSocket.OPEN) {
-                                client.send(broadcastData);
-                            }
                         });
                     }
                 }
@@ -76,5 +66,22 @@ export default function setupWebSocket(server) {
         });
     });
 
+    return wss;
+}
+
+// Global broadcast function
+export function broadcastToAll(data) {
+    if (!wss) return;
+    
+    const broadcastData = JSON.stringify(data);
+    wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(broadcastData);
+        }
+    });
+}
+
+// Export wss for other modules to use
+export function getWebSocketServer() {
     return wss;
 }
