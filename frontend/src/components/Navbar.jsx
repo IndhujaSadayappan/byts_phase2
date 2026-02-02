@@ -9,34 +9,19 @@ function Navbar() {
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
-  const [userInitial, setUserInitial] = useState('U')
+  const [userInitial, setUserInitial] = useState('')
   const [workStatus, setWorkStatus] = useState(null)
   const dropdownRef = useRef(null)
 
   useEffect(() => {
-    // Get user initial and work status from localStorage
-    const userDataStr = localStorage.getItem('user')
-    const fullName = localStorage.getItem('fullName')
-
-    if (userDataStr) {
-      try {
-        const userData = JSON.parse(userDataStr)
-        const name = userData.fullName || userData.name || ''
-        if (name) {
-          setUserInitial(name.charAt(0).toUpperCase())
-        }
-        // Get work status from user data
-        if (userData.role && userData.company) {
-          setWorkStatus({
-            role: userData.role,
-            company: userData.company
-          })
-        }
-      } catch (err) {
-        console.error('Error parsing user data:', err)
-      }
-    } else if (fullName) {
-      setUserInitial(fullName.charAt(0).toUpperCase())
+    // Get user data from localStorage
+    const userEmail = localStorage.getItem('userEmail')
+    const rememberMe = localStorage.getItem('rememberedEmail')
+    
+    if (userEmail) {
+      // Extract first letter from email for initial
+      const initial = userEmail.charAt(0).toUpperCase()
+      setUserInitial(initial)
     }
   }, [])
 
@@ -66,8 +51,9 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('authToken')
     localStorage.removeItem('userId')
-    localStorage.removeItem('user')
-    localStorage.removeItem('fullName')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('rememberedEmail')
+    localStorage.removeItem('profileCompleted')
     navigate('/login')
   }
 
@@ -155,13 +141,13 @@ function Navbar() {
                     <User size={18} />
                     My Profile
                   </Link>
-                  <Link
+                  {/* <Link
                     to="/settings"
                     className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-background hover:text-secondary transition-all font-medium"
                   >
                     <Settings size={18} />
                     Settings
-                  </Link>
+                  </Link> */}
                   <Link
                     to="/my-experiences"
                     className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-background hover:text-secondary transition-all font-medium"
