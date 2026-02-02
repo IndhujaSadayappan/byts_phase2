@@ -1,5 +1,6 @@
 import Profile from '../models/Profile.js'
 import User from '../models/User.js'
+import { validateProfileData } from '../utils/validationUtils.js'
 
 export const createProfile = async (req, res) => {
   try {
@@ -12,6 +13,20 @@ export const createProfile = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Profile already exists',
+      })
+    }
+
+    // Define required fields for profile creation
+    const requiredFields = ['fullName', 'rollNumber', 'collegeEmail', 'whatsappNumber', 'batch']
+
+    // Comprehensive validation
+    const validation = validateProfileData(profileData, requiredFields)
+
+    if (!validation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: validation.errors,
       })
     }
 

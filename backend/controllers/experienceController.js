@@ -2,6 +2,12 @@ import ExperienceMetadata from '../models/ExperienceMetadata.js'
 import ExperienceRound from '../models/ExperienceRound.js'
 import ExperienceMaterial from '../models/ExperienceMaterial.js'
 import mongoose from 'mongoose'
+import {
+  validateExperienceMetadata,
+  validateExperienceRounds,
+  validateExperienceMaterials,
+  validators
+} from '../utils/validationUtils.js'
 
 // --- Metadata Handling ---
 export const saveExperienceMetadata = async (req, res) => {
@@ -9,9 +15,28 @@ export const saveExperienceMetadata = async (req, res) => {
     const userId = req.user.id || req.user.userId
     const { _id, ...data } = req.body
 
+    // Comprehensive validation
+    const validation = validateExperienceMetadata(data)
+
+    if (!validation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: validation.errors,
+      })
+    }
+
     let experience
 
     if (_id) {
+      // Validate ObjectId format
+      if (!validators.objectId(_id)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid experience ID format',
+        })
+      }
+
       // Update existing
       experience = await ExperienceMetadata.findOneAndUpdate(
         { _id, userId }, // Ensure user owns it
@@ -85,6 +110,25 @@ export const saveExperienceRounds = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Experience ID is required' })
     }
 
+    // Validate ObjectId format
+    if (!validators.objectId(experienceId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid experience ID format',
+      })
+    }
+
+    // Validate rounds data
+    const validation = validateExperienceRounds(rounds)
+
+    if (!validation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: validation.errors,
+      })
+    }
+
     // Verify experience ownership first
     const metadata = await ExperienceMetadata.findOne({ _id: experienceId, userId })
     if (!metadata) {
@@ -119,6 +163,25 @@ export const saveExperienceMaterials = async (req, res) => {
 
     if (!experienceId) {
       return res.status(400).json({ success: false, message: 'Experience ID is required' })
+    }
+
+    // Validate ObjectId format
+    if (!validators.objectId(experienceId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid experience ID format',
+      })
+    }
+
+    // Validate materials data
+    const validation = validateExperienceMaterials(materials)
+
+    if (!validation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: validation.errors,
+      })
     }
 
     // Verify experience ownership

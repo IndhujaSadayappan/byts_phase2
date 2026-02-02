@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import jwt from 'jsonwebtoken'
+import { validateSignupData, validateLoginData } from '../utils/validationUtils.js'
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' })
@@ -9,24 +10,19 @@ export const signup = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body
 
-    // Validate email domain (college email)
-    if (!email.includes('@') || !email.match(/\.(edu|ac\.in|college\.com)$/i)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please use a valid college email address',
-      })
-    }
+    // Comprehensive validation using validation utilities
+    const validation = validateSignupData({ email, password, confirmPassword })
 
-    // Check if passwords match
-    if (password !== confirmPassword) {
+    if (!validation.isValid) {
       return res.status(400).json({
         success: false,
-        message: 'Passwords do not match',
+        message: 'Validation failed',
+        errors: validation.errors,
       })
     }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email })
+    const existingUser = await User.findOne({ email: email.toLowerCase().trim() })
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -35,7 +31,7 @@ export const signup = async (req, res) => {
     }
 
     // Create new user
-    const user = new User({ email, password })
+    const user = new User({ email: email.toLowerCase().trim(), password })
     await user.save()
 
     // Generate token
@@ -59,16 +55,19 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body
 
-    // Validate input
-    if (!email || !password) {
+    // Comprehensive validation using validation utilities
+    const validation = validateLoginData({ email, password })
+
+    if (!validation.isValid) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide email and password',
+        message: 'Validation failed',
+        errors: validation.errors,
       })
     }
 
     // Find user
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email: email.toLowerCase().trim() })
     if (!user) {
       return res.status(400).json({
         success: false,
